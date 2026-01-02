@@ -34,12 +34,8 @@ const App: React.FC = () => {
               <span className="font-bold text-xl serif">鲊</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900 serif tracking-wide">鲊辣椒工坊</h1>
+              <h1 className="text-xl font-bold text-gray-900 serif tracking-wide">鲊海椒工坊</h1>
             </div>
-          </div>
-          
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 text-xs font-medium text-orange-600 bg-orange-50 px-3 py-1.5 rounded-full hidden sm:block">
-            {recipes.length} 道食谱
           </div>
         </div>
         

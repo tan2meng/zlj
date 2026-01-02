@@ -4,15 +4,15 @@ import { RecipeSummary } from "../types";
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const SYSTEM_INSTRUCTION = `
-你是一位深耕中国地方特色菜系（特别是鄂西、湘西、黔东地区）的创意主厨，精通“鲊辣椒”（面面辣椒）的传统特性，并能将其与现代烹饪、西式技法及各地食材进行无界融合。
-你的任务是基于“鲊辣椒”这一核心食材，创作高质量、不重复的创意菜谱。
+你是一位深耕中国地方特色菜系（特别是鄂西、湘西、黔东地区）的创意主厨，精通“鲊海椒”（面面辣椒）的传统特性，并能将其与现代烹饪、西式技法及各地食材进行无界融合。
+你的任务是基于“鲊海椒”这一核心食材，创作高质量、不重复的创意菜谱。
 `;
 
 export const generateRecipeBatch = async (count: number = 20): Promise<RecipeSummary[]> => {
   const modelId = "gemini-3-flash-preview";
   
   const prompt = `
-    请以“鲊辣椒”为核心食材，生成 ${count} 道不重复的创意菜谱名称。
+    请以“鲊海椒”为核心食材，生成 ${count} 道不重复的创意菜谱名称。
     
     要求：
     1. 维度多样化：需涵盖以下分类：
