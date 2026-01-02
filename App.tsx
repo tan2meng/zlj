@@ -3,6 +3,7 @@ import { Recipe, CategoryType } from './types';
 import { STATIC_RECIPES } from './data/staticRecipes';
 import RecipeCard from './components/RecipeCard';
 import RecipeDetailModal from './components/RecipeDetailModal';
+import LotteryOverlay from './components/LotteryOverlay';
 import { UtensilsCrossed } from 'lucide-react';
 
 const CATEGORIES: CategoryType[] = ['全部', '传统鄂湘黔系', '传统菜系融合', '海鲜/河鲜融合', '时蔬/菌菇派', '现代/西式跨界', '主食/点心类'];
@@ -13,6 +14,9 @@ const App: React.FC = () => {
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>('全部');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  
+  // State for the lottery animation overlay
+  const [isLotteryRunning, setIsLotteryRunning] = useState(false);
 
   // Filter logic
   useEffect(() => {
@@ -23,14 +27,40 @@ const App: React.FC = () => {
     }
   }, [selectedCategory, recipes]);
 
+  // Handle clicking the Logo to start the lottery
+  const handleLogoClick = () => {
+    if (!isLotteryRunning) {
+        setIsLotteryRunning(true);
+    }
+  };
+
+  // Handle the completion of the lottery animation
+  const handleLotteryComplete = (winningRecipe: Recipe) => {
+    setIsLotteryRunning(false);
+    setSelectedRecipe(winningRecipe);
+  };
+
   return (
     <div className="min-h-screen bg-[#FDF8F5] text-gray-800 font-sans select-none pb-20 sm:pb-0">
+      
+      {/* Lottery Animation Overlay */}
+      {isLotteryRunning && (
+        <LotteryOverlay 
+            recipes={filteredRecipes.length > 0 ? filteredRecipes : recipes} 
+            onComplete={handleLotteryComplete} 
+        />
+      )}
+
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md shadow-sm border-b border-orange-100 sticky top-0 z-40 transition-all">
         {/* Centered Logo Container */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 relative flex items-center justify-center">
-          <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => window.scrollTo(0,0)}>
-            <div className="w-9 h-9 bg-orange-600 rounded-lg flex items-center justify-center text-white shadow-md transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+          <div 
+            className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity group" 
+            onClick={handleLogoClick}
+            title="点击随机抽取一道菜！"
+          >
+            <div className="w-9 h-9 bg-orange-600 rounded-lg flex items-center justify-center text-white shadow-md transform -rotate-3 group-hover:rotate-12 transition-transform duration-300">
               <span className="font-bold text-xl serif">鲊</span>
             </div>
             <div>
